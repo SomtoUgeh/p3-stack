@@ -33,7 +33,9 @@ cd p3-stack
 
 ## Skills
 
-architect, arena, automate-me, benchmark-checklist, blast-radius, bro, correct, create-verification-skill, figure-it-out, how, interrogate, maintain-verification-skill, make-bot-ui, no-comments, p3-help, recall, reflect, setup-p3, show-me-your-work, swarm, tdd, teach, technical-writing, typescript-best-practices, unslop, why.
+architect, arena, automate-me, benchmark-checklist, blast-radius, bro, correct, create-formal-verification-skill, create-verification-skill, figure-it-out, how, in-your-own-words, interrogate, ketchup, ketchup-video, maintain-formal-verification-skill, maintain-verification-skill, make-bot-ui, no-comments, p3-help, recall, reflect, setup-p3, sharpen, show-me-your-work, statechart, swarm, tdd, teach, technical-writing, typescript-best-practices, unslop, why.
+
+`statechart` vendors pstack's TLA+ statechart scripts (without their test corpus). It needs Node 22.18+ and, on first run, `mise` to install TLC and Java, or `TLA2TOOLS` and `JAVA` set to an existing `tla2tools.jar` and Java 11+.
 
 ## Principles
 
@@ -42,3 +44,8 @@ The twenty-four principle skills are indexed inside `p3-mode` and referenced by 
 ## Credit
 
 p3-stack adapts [pstack](https://github.com/cursor/plugins/tree/main/pstack) by [poteto](https://x.com/poteto). The skills, principles, and language are hers; the T3 Code rewiring is this repo's. MIT, see [LICENSE](LICENSE).
+
+## Upstreams
+
+- pstack: synced through `cursor/plugins` commit `c742dd6` (2026-10-27). Port newer `pstack/` changes from there.
+- p3-stack: this repo forks `uzairansaruzi/p3-stack`, kept as the `upstream` remote. Merge its new commits into `main` by PR.
