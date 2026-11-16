@@ -22,9 +22,9 @@ A file without the `# defaults: 2` line comes from an older setup. That setup wr
 
 - A code role (`feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`) whose value equals the file's `swarm workers` value.
 - A `hardest tasks` value that equals the file's `judgment and prose` value.
-- A panel role (`arena runners`, `arena cross-judge pool`, `architect runners`, `interrogate reviewers`) whose list is exactly two entries from two providers.
+- A panel role (`arena runners`, `arena cross-judge pool`, `architect runners`, `interrogate reviewers`) whose list has the old default's shape, which was one entry per provider, up to two. That is exactly two entries from two providers, or exactly one entry that names a model.
 
-Every other value is the user's choice and stays, including every `inherit-parent` or `auto` value. Tell the user which values you replaced.
+Every other value is the user's choice and stays, including every `inherit-parent` or `auto` value. The older setup also never wrote a speed, so add the `fast` token to a `swarm workers` or `reflect tooling` value whose model has a fast option. Tell the user which values you replaced or changed.
 
 ### 3. Budget, map, and confirm
 
@@ -37,7 +37,7 @@ Every other value is the user's choice and stays, including every `inherit-paren
 
 **(b) Apply it.** Build the working table. On a fresh run, give the code roles (`feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`), `judgment and prose`, and `reflect judgment, divergent, synthesizer` the most capable model detected, at `xhigh`. Give `hardest tasks` the strongest model detected, at `max`. Give `swarm workers` and `reflect tooling` the fastest strong model detected, at `high` with its fast option. Fill each panel role with one entry per model family detected, up to three, spread across providers first, each at `high`. Families and vendors are the ones Phase A and Phase C of the **arena** skill define. On a re-run, keep any role the user changed.
 
-Each role has a target effort, which is its default's effort moved by the budget. `large` keeps it, `unlimited` raises it one step, `medium` lowers it one step, and `small` lowers it two steps, on the ladder `max` > `xhigh` > `high` > `medium` > `low`. A target at either end of the ladder stays there. Most defaults are at `xhigh`, and each budget label names where those land. When the catalog exposes reasoning options for a model, set each real entry's effort option (under whatever name the catalog gives it for that model), panel entries included, to the role's target. If the model does not expose the target, use the highest option at or below it, else mark the role as needing a choice. So a model that tops out at `high` stays at `high` under `unlimited`. A model with no fast option never gets one. `inherit-parent` does not change. When the catalog exposes no reasoning options, map roles only and drop effort tokens; the budget label is still recorded.
+Each role has a target effort, which is its default's effort moved by the budget. `large` keeps it, `unlimited` raises it one step, `medium` lowers it one step, and `small` lowers it two steps, on the ladder `max` > `xhigh` > `high` > `medium` > `low`. A target at either end of the ladder stays there. Most defaults are at `xhigh`, and each budget label names where those land. When the catalog exposes reasoning options for a model, set each real entry's effort option (under whatever name the catalog gives it for that model), panel entries included, to the role's target. If the model does not expose the target, use the highest option at or below it, else mark the role as needing a choice. So a model that tops out at `high` stays at `high` under `unlimited`. The budget moves effort only, so an entry keeps its fast option under every budget. A model with no fast option never gets one. `inherit-parent` does not change. When the catalog exposes no reasoning options, map roles only and drop effort tokens; the budget label is still recorded.
 
 **(c) Show the roles and confirm.** Show every role with its model, marking any entry not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` (the role runs on the parent thread's model, so omit the model in `delegate_task`) as the options. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one `delegate_task` runs per entry, `inherit-parent` entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena runs one judge. It tries only values from a vendor other than the parent's, in list order, so order it by preference. A vendor is a provider, so every model from one provider is one vendor. An `inherit-parent` value never judges. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
 
@@ -47,7 +47,7 @@ Every real entry written must be in the `orchestrator_capabilities` result, unde
 
 ### 5. Write the file
 
-Write `p3-models.md` with the `# defaults: 2` line, a `# budget` line with the chosen label and the effort that label names, and one line per role, using the same labels p3-mode uses. Write each entry as `<providerInstanceId>/<model>`, followed by its effort option in parentheses when step 3(b) set one. Overwrite the whole file so re-runs stay idempotent. Shape:
+Write `p3-models.md` with the `# defaults: 2` line, a `# budget` line with the chosen label and the effort that label names, and one line per role, using the same labels p3-mode uses. Write each entry as `<providerInstanceId>/<model>`, followed in parentheses by its effort option when step 3(b) set one, then `fast` when the entry uses its fast option. So an entry ends with `(high, fast)`, `(high)`, `(fast)`, or nothing. Overwrite the whole file so re-runs stay idempotent. Shape:
 
 ```
 # p3 model configuration. One line per role. Delete a line to fall back to the skill default.
@@ -60,11 +60,11 @@ perf-issue: <providerInstanceId>/<model> (<effort>)
 hillclimb: <providerInstanceId>/<model> (<effort>)
 judgment and prose: <providerInstanceId>/<model> (<effort>)
 hardest tasks: <providerInstanceId>/<model> (<effort>)
-reflect tooling: <providerInstanceId>/<model> (<effort>)
+reflect tooling: <providerInstanceId>/<model> (<effort>, fast)
 reflect judgment, divergent, synthesizer: <providerInstanceId>/<model> (<effort>)
 arena runners: <entry>, <entry>, <entry>
 arena cross-judge pool: <entry>, <entry>, <entry>
-swarm workers: <providerInstanceId>/<model> (<effort>)
+swarm workers: <providerInstanceId>/<model> (<effort>, fast)
 architect runners: <entry>, <entry>, <entry>
 interrogate reviewers: <entry>, <entry>, <entry>
 ```
