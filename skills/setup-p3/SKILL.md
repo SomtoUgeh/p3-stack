@@ -22,7 +22,7 @@ A file without the `# defaults: 2` line comes from an older setup. That setup wr
 
 - A code role (`feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`) whose value equals the file's `swarm workers` value.
 - A `hardest tasks` value that equals the file's `judgment and prose` value.
-- A panel role (`arena runners`, `arena cross-judge pool`, `architect runners`, `interrogate reviewers`) whose list has the old default's shape, which was one entry per provider, up to two. That is exactly two entries from two providers, or exactly one entry that names a model.
+- A panel role (`arena runners`, `arena cross-judge pool`, `architect runners`, `interrogate reviewers`) whose list has the old default's shape, which was one entry per provider, up to two. That is exactly two entries from two providers, or exactly one entry that names a model when `orchestrator_capabilities` detects only that entry's provider.
 
 Every other value is the user's choice and stays, including every `inherit-parent` or `auto` value. The older setup also never wrote a speed, so add the `fast` token to a `swarm workers` or `reflect tooling` value whose model has a fast option. Tell the user which values you replaced or changed.
 
