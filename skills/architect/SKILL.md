@@ -20,7 +20,7 @@ Open a todolist with one entry per phase before starting.
 
 ## Phase A: Ground the problem
 
-Build a real mental model of every system the new code touches. Run the **how** skill over the relevant subsystems. Naming a file isn't grounding. Produce the architectural explanation `how` prescribes. If the design redefines ownership or layering, also run the **why** skill on the existing shape so the rationale becomes a constraint, not a guess.
+Build a real mental model of every system the new code touches. Trace the relevant subsystems. Naming a file isn't grounding. Write an architectural explanation of each. If the design redefines ownership or layering, also run the **why** skill on the existing shape so the rationale becomes a constraint, not a guess.
 
 Skip Phase A only when the work is genuinely greenfield with no surrounding system to integrate.
 
@@ -28,7 +28,7 @@ Skip Phase A only when the work is genuinely greenfield with no surrounding syst
 
 Run the **arena** skill with the design-sketch task and the Phase A grounding artifacts. Send one `delegate_task` per runner, `mode: "async"`, and drain with `task_status`. Every brief stands alone: child agents get only the brief, never this thread's context. Each brief carries the task, the grounding artifacts, and `references/runner-prompt.md`.
 
-Take the runners from the `architect runners` line in `p3-models.md`, in place of the `arena runners` line. Resolve the roles against `orchestrator_capabilities`; never hardcode a model. If the file or that line is missing, run `setup-p3` or use one entry per distinct provider in `orchestrator_capabilities`, up to two. Alias and rejected entries follow the runner rules in the **arena** skill's Phase A.
+Take the runners from the `architect runners` line in `p3-models.md`, in place of the `arena runners` line. Resolve the roles against `orchestrator_capabilities`; never hardcode a model. If the file or that line is missing, run `setup-p3` or use one entry per distinct model family in `orchestrator_capabilities`, up to three, spread across providers first. Alias and rejected entries follow the runner rules in the **arena** skill's Phase A.
 
 Design it twice. Require at least two structurally distinct candidates before synthesis, even when the first looks sufficient. This is the **exhaust-the-design-space** principle skill made concrete. Whole-shape alternatives, not point fixes inside one shape.
 
@@ -69,7 +69,7 @@ Use judgment. A few edge cases don't condemn an architecture. Some problems are 
 
 When you scrap:
 
-1. Re-run the **how** skill over what's been built.
+1. Trace what's been built.
 2. Redesign as if the new constraints had been day-one assumptions, per redesign-from-first-principles.
 3. Subtract before adding, per the **subtract-before-you-add** principle skill. The new sketch should be smaller than the old one before it grows.
 4. Return to Phase B and re-run arena.

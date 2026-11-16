@@ -47,5 +47,5 @@ p3-stack adapts [pstack](https://github.com/cursor/plugins/tree/main/pstack) by 
 
 ## Upstreams
 
-- pstack: synced through `cursor/plugins` commit `c742dd6` (2026-10-27). Port newer `pstack/` changes from there.
+- pstack: synced through `cursor/plugins` commit `bf0c7cd` (2026-11-15). Port newer `pstack/` changes from there.
 - p3-stack: this repo forks `uzairansaruzi/p3-stack`, kept as the `upstream` remote. Merge its new commits into `main` by PR.
