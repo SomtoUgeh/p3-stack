@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # P3 mode
 
-Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's absolute path in every `agents/p3-agent.md` brief.
+Bundled skills live at `../<name>/SKILL.md` from this file, and the worker brief at `references/p3-agent.md`. Give every worker the absolute path of both files.
 
 ## Non-negotiables
 
@@ -88,7 +88,7 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 ## Subagents
 
-**Spawn every worker with `delegate_task`.** Code-writing delegates and ad-hoc helpers open their brief by pointing the worker at `agents/p3-agent.md`, which sends it to this file. The thread that receives `/p3-mode` runs the playbook. Never delegate the playbook itself. Routed workflow skills (`interrogate`, `reflect`, `swarm`) set their own roles for diverse-model review. Respect what the skill prescribes.
+**Spawn every worker with `delegate_task`.** Code-writing delegates and ad-hoc helpers open their brief by pointing the worker at the absolute path of `references/p3-agent.md`, which sends it to this file. The thread that receives `/p3-mode` runs the playbook. Never delegate the playbook itself. Routed workflow skills (`interrogate`, `reflect`, `swarm`) set their own roles for diverse-model review. Respect what the skill prescribes.
 
 **Defaults for every `delegate_task` call.** `mode: "async"` for background work, a steer or resume of a running worker too, because a foreground call holds your turn while other reports wait. Drain with `task_status` (stop with `task_cancel`). T3 child agents get only the brief and never inherit parent context, so every brief stands alone: the goal, file pointers not inlined context, constraints, and the report format you expect. Pick models by named role, never by slug. `setup-p3` writes the role lines to `p3-models.md`, resolved against `orchestrator_capabilities`. Code delegates tier by difficulty. The hardest changes (cross-cutting design, gnarly concurrency, subtle algorithms) read `hardest tasks`, whether the task needs judgment on vague intent or is a precisely specified sequence of steps to execute to the letter. Trivial mechanical edits go to your `swarm workers` model. Review and design panels default to three runners, one per model family, spread across providers. Per-role lines in `p3-models.md` override the model choices in the routed skills (`arena`, `swarm`, `architect`, `interrogate`, `reflect`). A role with no line keeps its default, and a role line of `inherit-parent` or `auto` runs that role on the parent chat model. Each code playbook's configured model comes from its line (`feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`). Prose and judgment read `judgment and prose`. If `p3-models.md` has no `# defaults: 2` line, an older setup wrote it. Keep honoring its lines, and tell the user once per session to rerun `/setup-p3`. Use `t3_thread_launch` only when a worker needs its own thread, worktree, or branch, and keep one writer per worktree.
 
