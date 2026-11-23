@@ -29,7 +29,7 @@ cd p3-stack
 
 ## The mode
 
-`p3-mode` routes every task. Its playbooks: investigation, bug fix, perf issue, hillclimb, runtime forensics, trace forensics, feature, refactoring, prototype, visual parity, authoring a skill, eval, babysit, shipping, autonomous run, orchestrate, autopilot-full, autopilot-stack, session pickup, pause safely, multi-phase plan, worktree cleanup, opening a PR.
+`p3-mode` routes every task. Its playbooks: investigation, bug fix, perf issue, hillclimb, runtime forensics, trace forensics, feature, refactoring, prototype, visual parity, authoring a skill, eval, babysit, shipping, autonomous run, autopilot-full, autopilot-stack, session pickup, pause safely, multi-phase plan, worktree cleanup, opening a PR.
 
 ## Skills
 
@@ -47,5 +47,5 @@ p3-stack adapts [pstack](https://github.com/cursor/plugins/tree/main/pstack) by 
 
 ## Upstreams
 
-- pstack: synced through `cursor/plugins` commit `bf0c7cd` (2026-11-15). Port newer `pstack/` changes from there.
+- pstack: synced through `cursor/plugins` commit `0b46ec3` (2026-11-19). Port newer `pstack/` changes from there.
 - p3-stack: this repo forks `uzairansaruzi/p3-stack`, kept as the `upstream` remote. Merge its new commits into `main` by PR.
