@@ -16,56 +16,52 @@ Call `orchestrator_capabilities`. It lists the providers and models you can pass
 
 ### 2. Load current state
 
-The roles are the labels shown in step 5. If `p3-models.md` already exists at the chosen location, read it and treat its `# budget` line and its role values as the current choices. Otherwise start from the defaults in step 3(b). A line whose role is not in step 5, such as `how explorer` or `why investigators`, is from a retired role. Drop it.
+The roles are the labels shown in step 5. If `p3-models.md` already exists at the chosen location, read it and treat its `# budget` line and its role values as the current choices. Otherwise start from the defaults in step 3(b). A line whose role is not in step 5, such as `hardest tasks`, `architect runners`, `reflect tooling`, or `why investigators`, is from a retired role. Drop it.
 
-A file without the `# defaults: 2` line comes from an older setup. That setup wrote a line for every role, so some of its values are old defaults, not choices. Before step 3, replace these values with the role's step 3(b) default:
+A file without the `# defaults: 3` line comes from an older setup. That setup wrote a line for every role, so some of its values are old defaults, not choices. Before step 3, replace these values:
 
-- A code role (`feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`) whose value equals the file's `swarm workers` value.
-- A `hardest tasks` value that equals the file's `judgment and prose` value.
-- A panel role (`arena runners`, `arena cross-judge pool`, `architect runners`, `interrogate reviewers`) whose list has the old default's shape, which was one entry per provider, up to two. That is exactly two entries from two providers, or exactly one entry that names a model when `orchestrator_capabilities` detects only that entry's provider.
+- An `arena cross-judge pool` list with the old default's shape, one entry per model family up to three with two of them from one provider, takes the step 3(b) list. Two entries from one provider are one vendor, so the second could judge only where the first also could.
+- A `# budget: unlimited` line becomes `large`, because no role runs above `xhigh`.
+- An effort above `xhigh` in any entry becomes `xhigh`.
+- If the file has no `# defaults: 2` line either, a code role (`feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`) whose value equals the file's `swarm workers` value takes its step 3(b) default. A panel role (`arena runners`, `arena cross-judge pool`, `interrogate reviewers`) whose list has that setup's default shape, one entry per provider, up to two, takes its step 3(b) list. That is exactly two entries from two providers, or exactly one entry that names a model when `orchestrator_capabilities` detects only that entry's provider.
 
-Every other value is the user's choice and stays, including every `inherit-parent` or `auto` value. The older setup also never wrote a speed, so add the `fast` token to a `swarm workers` or `reflect tooling` value whose model has a fast option. Tell the user which values you replaced or changed.
+Every other value is the user's choice and stays, including every `inherit-parent` or `auto` value. Add the `fast` token to every real entry whose model has a fast option, since every such entry now runs with it. Tell the user which values you replaced or changed.
 
 ### 3. Budget, map, and confirm
 
-**(a) Ask for a budget.** Ask plainly in the thread. Offer these four options with these exact labels, and name the current budget when the file records one. With no file, say that `large` matches the skill defaults.
+**(a) Ask for a budget.** Ask plainly in the thread. Offer these three options with these exact labels, and name the current budget when the file records one. With no file, say that `large` matches the skill defaults.
 
-- `unlimited — max reasoning`
 - `large — xhigh reasoning`
 - `medium — high reasoning`
 - `small — medium reasoning`
 
-**(b) Apply it.** Build the working table. On a fresh run, give the code roles (`feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`), `judgment and prose`, and `reflect judgment, divergent, synthesizer` the most capable model detected, at `xhigh`. Give `hardest tasks` the strongest model detected, at `max`. Give `swarm workers` and `reflect tooling` the fastest strong model detected, at `high` with its fast option. Fill each panel role with one entry per model family detected, up to three, spread across providers first, each at `high`. Families and vendors are the ones Phase A and Phase C of the **arena** skill define. On a re-run, keep any role the user changed.
+**(b) Apply it.** Build the working table. On a fresh run, give the code roles (`feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`) and `judgment and prose` the most capable model detected, at `xhigh`. Give `swarm workers` the fastest strong model detected, at `high`. Fill `arena runners` and `interrogate reviewers` with one entry per model family detected, up to three, spread across providers first, each at `high`. Fill `arena cross-judge pool` with one entry per vendor detected, up to three, each at `high`, because Arena tries only a vendor other than the parent's, and a second entry from one vendor could judge only where the first could. Give every entry whose model has a fast option that option. Families and vendors are the ones Phase A and Phase C of the **arena** skill define. On a re-run, keep any role the user changed.
 
-Each role has a target effort, which is its default's effort moved by the budget. `large` keeps it, `unlimited` raises it one step, `medium` lowers it one step, and `small` lowers it two steps, on the ladder `max` > `xhigh` > `high` > `medium` > `low`. A target at either end of the ladder stays there. Most defaults are at `xhigh`, and each budget label names where those land. When the catalog exposes reasoning options for a model, set each real entry's effort option (under whatever name the catalog gives it for that model), panel entries included, to the role's target. If the model does not expose the target, use the highest option at or below it, else mark the role as needing a choice. So a model that tops out at `high` stays at `high` under `unlimited`. The budget moves effort only, so an entry keeps its fast option under every budget. A model with no fast option never gets one. `inherit-parent` does not change. When the catalog exposes no reasoning options, map roles only and drop effort tokens; the budget label is still recorded.
+Each role has a target effort, which is its default's effort moved by the budget. `large` keeps it, `medium` lowers it one step, and `small` lowers it two steps, on the ladder `xhigh` > `high` > `medium` > `low`. No role runs above `xhigh`, and a target at the bottom of the ladder stays there. Most defaults are at `xhigh`, and each budget label names where those land. When the catalog exposes reasoning options for a model, set each real entry's effort option (under whatever name the catalog gives it for that model), panel entries included, to the role's target. If the model does not expose the target, use the highest option at or below it, else mark the role as needing a choice. The budget moves effort only, so an entry keeps its fast option under every budget. A model with no fast option never gets one. `inherit-parent` does not change. When the catalog exposes no reasoning options, map roles only and drop effort tokens; the budget label is still recorded.
 
-**(c) Show the roles and confirm.** Show every role with its model, marking any entry not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` (the role runs on the parent thread's model, so omit the model in `delegate_task`) as the options. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one `delegate_task` runs per entry, `inherit-parent` entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena runs one judge. It tries only values from a vendor other than the parent's, in list order, so order it by preference. A vendor is a provider, so every model from one provider is one vendor. An `inherit-parent` value never judges. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
+**(c) Show the roles and confirm.** Show every role with its model, marking any entry not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models at `xhigh` or below plus `inherit-parent` (the role runs on the parent thread's model, so omit the model in `delegate_task`) as the options. For panel roles (arena runners, interrogate reviewers) the value is a list, and one `delegate_task` runs per entry, `inherit-parent` entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena runs one judge. It tries only values from a vendor other than the parent's, in list order, so order it by preference. A vendor is a provider, so every model from one provider is one vendor. An `inherit-parent` value never judges. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
 
 ### 4. Validate
 
-Every real entry written must be in the `orchestrator_capabilities` result, under the provider instance it came from. `inherit-parent` always passes. If a chosen entry is not available, stop and ask again.
+Every real entry written must be in the `orchestrator_capabilities` result, under the provider instance it came from, at `xhigh` or below. `inherit-parent` always passes. If a chosen entry is not available, stop and ask again.
 
 ### 5. Write the file
 
-Write `p3-models.md` with the `# defaults: 2` line, a `# budget` line with the chosen label and the effort that label names, and one line per role, using the same labels p3-mode uses. Write each entry as `<providerInstanceId>/<model>`, followed in parentheses by its effort option when step 3(b) set one, then `fast` when the entry uses its fast option. So an entry ends with `(high, fast)`, `(high)`, `(fast)`, or nothing. Overwrite the whole file so re-runs stay idempotent. Shape:
+Write `p3-models.md` with the `# defaults: 3` line, a `# budget` line with the chosen label and the effort that label names, and one line per role, using the same labels p3-mode uses. Write each entry as `<providerInstanceId>/<model>`, followed in parentheses by its effort option when step 3(b) set one, then `fast` when the entry uses its fast option. So an entry ends with `(high, fast)`, `(high)`, `(fast)`, or nothing. Overwrite the whole file so re-runs stay idempotent. Shape:
 
 ```
 # p3 model configuration. One line per role. Delete a line to fall back to the skill default.
 # `inherit-parent` as a value: the role runs on the parent thread's model (omit the delegate_task model). Entries in a panel list still count toward its fan-out.
-# defaults: 2
+# defaults: 3
 # budget: large (xhigh)
-feature, refactoring: <providerInstanceId>/<model> (<effort>)
-bug-fix: <providerInstanceId>/<model> (<effort>)
-perf-issue: <providerInstanceId>/<model> (<effort>)
-hillclimb: <providerInstanceId>/<model> (<effort>)
-judgment and prose: <providerInstanceId>/<model> (<effort>)
-hardest tasks: <providerInstanceId>/<model> (<effort>)
-reflect tooling: <providerInstanceId>/<model> (<effort>, fast)
-reflect judgment, divergent, synthesizer: <providerInstanceId>/<model> (<effort>)
+feature, refactoring: <providerInstanceId>/<model> (<effort>, fast)
+bug-fix: <providerInstanceId>/<model> (<effort>, fast)
+perf-issue: <providerInstanceId>/<model> (<effort>, fast)
+hillclimb: <providerInstanceId>/<model> (<effort>, fast)
+judgment and prose: <providerInstanceId>/<model> (<effort>, fast)
 arena runners: <entry>, <entry>, <entry>
 arena cross-judge pool: <entry>, <entry>, <entry>
 swarm workers: <providerInstanceId>/<model> (<effort>, fast)
-architect runners: <entry>, <entry>, <entry>
 interrogate reviewers: <entry>, <entry>, <entry>
 ```
 
